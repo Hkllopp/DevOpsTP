@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  databaseapi:
+    build: ./BackendAPI2/simple-api/
+    networks:
+      - myFirstNetwork
+    depends_on:
+      - running-database
+    ports:
+      - "8080:8080"
+
+  running-database:
+    build: ./Database/
+    networks:
+      - myFirstNetwork
+    ports:
+      - "5432:5432"
+
+  apacheserver:
+    build: ./ApacheServer/
+    ports:
+      - "80:80"
+    networks:
+      - myFirstNetwork
+    depends_on:
+      - databaseapi
+
+networks:
+  myFirstNetwork:
