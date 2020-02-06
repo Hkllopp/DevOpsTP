@@ -1,0 +1,28 @@
+version: '3.7'
+services: 
+    simple-api:
+        build: ./simple-api/
+        networks: 
+            - neverland
+        ports:
+            - "8080:8080"
+        depends_on:
+            - database
+
+    database:
+        build: ./database/
+        networks: 
+            - neverland
+
+    web-server:
+        build: ./web-server/
+        ports:
+            - "80:80"
+        networks: 
+            - neverland
+        depends_on:
+            - simple-api
+
+networks:
+    neverland:
+        name: neverland
